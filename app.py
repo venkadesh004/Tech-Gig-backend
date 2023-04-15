@@ -1,0 +1,137 @@
+from flask import Flask, request
+import pyrebase
+from flask_cors import CORS
+import joblib
+from tensorflow.keras.models import model_from_json
+from tensorflow.keras.preprocessing.text import Tokenizer
+from tensorflow.keras.preprocessing.sequence import pad_sequences
+import pandas as pd
+from sklearn.model_selection import train_test_split
+
+app = Flask(__name__)
+CORS(app)
+
+app.config["SECRET_KEY"] = "faslkdfjlaskdfjl;sdkfj"
+
+firebaseConfig = {
+  "apiKey": "AIzaSyALzbrFOUwOMNuYFtFqrbs3UlXbQveUbpE",
+  "authDomain": "intel-hackathon-69537.firebaseapp.com",
+  "databaseURL": "https://intel-hackathon-69537-default-rtdb.asia-southeast1.firebasedatabase.app",
+  "projectId": "intel-hackathon-69537",
+  "storageBucket": "intel-hackathon-69537.appspot.com",
+  "messagingSenderId": "370106770915",
+  "appId": "1:370106770915:web:71cb05c5fe16effd296cd6",
+  "measurementId": "G-Q0P4FVT0Y8"
+}
+
+data = pd.read_csv('review.csv')
+
+X_train, X_test, y_train, y_test = train_test_split(data['review'], data['sentiment'], test_size=0.001)
+
+firebase = pyrebase.initialize_app(firebaseConfig)
+db = firebase.database()
+
+json_file = open('model.json', 'r')
+loaded_model_json = json_file.read()
+json_file.close()
+loaded_model = model_from_json(loaded_model_json)
+
+loaded_model.load_weights("model.h5")
+
+tokenizer = Tokenizer(num_words=10000, oov_token='<OOV>')
+tokenizer.fit_on_texts(X_train)
+
+@app.route('/<string:username>', methods=["GET", "POST"])
+def getUser(username):
+    if request.method == "POST":
+        password = request.get_json()["password"]
+        users = db.child("users").get().val()
+
+        print(users)
+
+        if users == None:
+            return "No Data"
+        
+        for i in users:
+            # print(users[i])
+            if users[i]["username"] == username:
+                if users[i]["password"] == password:
+                    return "Correct password"
+                else:
+                    return "Wrong password"
+
+    return "Not Found"
+
+@app.route('/addUser', methods=["POST"])
+def addUser():
+    if request.method == "POST":
+        data = request.get_json()
+
+        print(data)
+
+        db.child("users").push(data)
+
+        return "Done"
+    
+    return "Error"
+
+@app.route('/getItems', methods=["GET"])
+def getItems():
+    items = db.child("products").get().val()
+
+    if items == None:
+        return "No Items"
+
+    return items
+
+@app.route('/getItem/<string:itemID>', methods=["GET"])
+def getItem(itemID):
+    items = db.child("products").get().val()
+
+    for i in items:
+        if items[i]["itemID"] == int(itemID):
+            comments = items[i]["comments"]
+
+            classify = []
+
+            for j in comments:
+                user_review = j
+
+                user_review = tokenizer.texts_to_sequences([user_review])
+                user_review = pad_sequences(user_review, maxlen=100, padding='post', truncating='post')
+
+                # Predict sentiment for user review
+                sentiment = loaded_model.predict(user_review)
+
+                # Print the predicted sentiment
+                # print(sentiment)
+                if sentiment > 0.6:
+                    classify.append("Positive")
+                elif sentiment < 0.6 and sentiment >= 0.1:
+                    classify.append("Neutral")
+                else:
+                    classify.append("Negative")
+
+            items[i]["classify"] = classify
+
+            return items[i]
+
+    # print(items)
+
+    return "NOT FOUND"
+
+@app.route('/addItems', methods=["POST"])
+def addItem():
+    if request.method == "POST":
+        data = request.get_json()
+
+        print(data)
+
+        db.child("products").push(data)
+
+        return "Done"
+    
+    return "Error"
+
+if __name__ == "__main__":
+    app.run(debug=True)
