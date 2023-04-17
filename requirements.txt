@@ -193,4 +193,3 @@ websocket-client
 Werkzeug
 widgetsnbextension
 wrapt
-yarl
