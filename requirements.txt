@@ -192,4 +192,3 @@ webencodings
 websocket-client
 Werkzeug
 widgetsnbextension
-wrapt
