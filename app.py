@@ -7,6 +7,9 @@ from tensorflow.keras.preprocessing.text import Tokenizer
 from tensorflow.keras.preprocessing.sequence import pad_sequences
 import pandas as pd
 from sklearn.model_selection import train_test_split
+import os
+
+os.system("/opt/render/project/src/.venv/bin/python -m pip install --upgrade pip")
 
 app = Flask(__name__)
 CORS(app)
