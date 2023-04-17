@@ -132,6 +132,7 @@ pymongo
 PyMsgBox
 pyparsing
 pyperclip
+PyQt5-sip
 Pyrebase4
 PyRect
 pyrsistent
