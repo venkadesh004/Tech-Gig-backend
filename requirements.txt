@@ -192,3 +192,4 @@ webencodings
 websocket-client
 Werkzeug
 widgetsnbextension
+pyproject.toml
