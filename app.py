@@ -70,7 +70,17 @@ def addUser():
     if request.method == "POST":
         data = request.get_json()
 
-        print(data)
+        # print(data)
+
+        users = db.child("users").get().val()
+        # print(users)
+
+        if users != None:
+            for i in users:
+                if users[i]["username"] == data["username"]:
+                    return "Already username exsists"
+                elif users[i]["email"] == data["email"]:
+                    return "Already Email exsists"
 
         db.child("users").push(data)
 
@@ -130,10 +140,63 @@ def addItem():
 
         print(data)
 
+        itemID = db.child("itemCount").get().val()
+        data["itemID"] = itemID+1
+
+        db.update({"itemCount": itemID+1})
+
         db.child("products").push(data)
 
         return "Done"
     
+    return "Error"
+
+@app.route('/addComments/<string:itemID>', methods=["GET", "POST"])
+def addComments(itemID):
+    if request.method == "POST":
+        data = request.get_json()
+
+        items = db.child("products").get().val()
+        users = db.child("users").get().val()
+
+        # print(items)
+
+        if items != None and users != None:
+            l = []
+            l2 = []
+            l3 = []
+
+            for i in items:
+                if items[i]["itemID"] == int(itemID):
+                    l = db.child("products").child(i).child("comments").get().val()
+                    l2 = db.child("products").child(i).child("comment-users").get().val()
+
+                    if l == "":
+                        l = []
+
+                    if l2 == "":
+                        l2 = []
+
+                    break
+
+            for j in users:
+                if users[j]["email"] == data["user-email"]:
+                    l3 = db.child("users").child(j).child("comments").get().val()
+                    if l3 == "":
+                        l3 = []
+
+                    break
+
+            l.append(data["comments"])
+            l2.append(data["user-email"])
+            l3.append(itemID)
+
+            db.child("products").child(i).update({"comments": l})
+            db.child("products").child(i).update({"comment-users": l2})
+            db.child("users").child(j).update({"comments": l3})
+
+            return "Done"
+
     return "Error"
 
 if __name__ == "__main__":

@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"prasanna@gmail.com\",\n    \"username\": \"prasanna\",\n    \"password\": \"prasanna\"\n}",
+					"raw": "{\n    \"email\": \"venkadeshdeveloper@gmail.com\",\n    \"username\": \"venkadesh\",\n    \"password\": \"venkadesh\",\n    \"comments\": \"\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"itemID\": 2,\n    \"price\": \"1000\",\n    \"productName\": \"Mechanical Keyboard\",\n    \"features\": [\n        \"RGB Lights\",\n        \"Wooden Made\"\n    ],\n    \"comments\": [\n        \"Nice Board\"\n    ],\n    \"imageURL\": \"https://www.meckeys.com/wp-content/uploads/2021/08/Keychron-K2-hot-swappable-wireless-mechanical-keyboard-for-Mac-Windows-iOS-Gateron-switch-blue-with-type-C-RGB-white-backlight-min.jpg\"\n}",
+					"raw": "{\n    \"itemID\": 1,\n    \"price\": \"1000\",\n    \"productName\": \"Mechanical Keyboard\",\n    \"features\": [\n        \"RGB Lights\",\n        \"Wooden Made\"\n    ],\n    \"comments\": \"\",\n    \"comment-users\": \"\",\n    \"imageURL\": \"https://www.meckeys.com/wp-content/uploads/2021/08/Keychron-K2-hot-swappable-wireless-mechanical-keyboard-for-Mac-Windows-iOS-Gateron-switch-blue-with-type-C-RGB-white-backlight-min.jpg\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -127,7 +127,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/getItem/1",
+					"raw": "http://127.0.0.1:5000/getItem/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -138,7 +138,39 @@
 					"port": "5000",
 					"path": [
 						"getItem",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add comments",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"comments\": \"Nice Product\",\n    \"user-email\": \"venkadeshdeveloper@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/addComments/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
 						"1"
+					],
+					"port": "5000",
+					"path": [
+						"addComments",
+						"2"
 					]
 				}
 			},
