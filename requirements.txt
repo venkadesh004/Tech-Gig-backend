@@ -84,7 +84,6 @@ Markdown
 MarkupSafe
 matplotlib
 matplotlib-inline
-mediapipe
 mistune
 ml-dtypes
 MouseInfo
