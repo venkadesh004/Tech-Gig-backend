@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"venkadeshdeveloper@gmail.com\",\n    \"username\": \"venkadesh\",\n    \"password\": \"venkadesh\",\n    \"comments\": \"\"\n}",
+					"raw": "{\n    \"email\": \"venkadeshdeveloper@gmail.com\",\n    \"username\": \"venkadesh\",\n    \"password\": \"venkadesh\",\n    \"comments\": \"\",\n    \"products\": \"\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"itemID\": 1,\n    \"price\": \"1000\",\n    \"productName\": \"Mechanical Keyboard\",\n    \"features\": [\n        \"RGB Lights\",\n        \"Wooden Made\"\n    ],\n    \"comments\": \"\",\n    \"comment-users\": \"\",\n    \"imageURL\": \"https://www.meckeys.com/wp-content/uploads/2021/08/Keychron-K2-hot-swappable-wireless-mechanical-keyboard-for-Mac-Windows-iOS-Gateron-switch-blue-with-type-C-RGB-white-backlight-min.jpg\"\n}",
+					"raw": "{\n    \"itemID\": 1,\n    \"price\": \"500\",\n    \"productName\": \"Mouse\",\n    \"features\": [\n        \"RGB Lights\",\n        \"Smooth Scrolling\"\n    ],\n    \"comments\": \"\",\n    \"comment-users\": \"\",\n    \"imageURL\": \"https://www.meckeys.com/wp-content/uploads/2021/08/Keychron-K2-hot-swappable-wireless-mechanical-keyboard-for-Mac-Windows-iOS-Gateron-switch-blue-with-type-C-RGB-white-backlight-min.jpg\",\n    \"brought\": \"\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -170,6 +170,41 @@
 					"port": "5000",
 					"path": [
 						"addComments",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add to Cart",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user-email\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/addToCart/2",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"addToCart",
 						"2"
 					]
 				}
