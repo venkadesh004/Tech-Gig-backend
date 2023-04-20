@@ -178,15 +178,12 @@
 		},
 		{
 			"name": "Add to Cart",
-			"protocolProfileBehavior": {
-				"disableBodyPruning": true
-			},
 			"request": {
-				"method": "GET",
+				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"user-email\": \"\"\n}",
+					"raw": "{\n    \"user-email\": \"venkadeshdeveloper@gmail.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -194,7 +191,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/addToCart/2",
+					"raw": "http://127.0.0.1:5000/addToCart/1",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -205,7 +202,39 @@
 					"port": "5000",
 					"path": [
 						"addToCart",
-						"2"
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Remove from cart",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"user-email\": \"venkadeshdeveloper@gmail.com\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/removeFromCart/1",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"removeFromCart",
+						"1"
 					]
 				}
 			},

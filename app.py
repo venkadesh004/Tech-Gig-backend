@@ -119,11 +119,11 @@ def getItem(itemID):
                 # Print the predicted sentiment
                 # print(sentiment)
                 if sentiment > 0.6:
-                    classify.append("Positive")
+                    classify.append(1)
                 elif sentiment < 0.6 and sentiment >= 0.1:
-                    classify.append("Neutral")
+                    classify.append(0)
                 else:
-                    classify.append("Negative")
+                    classify.append(-1)
 
             items[i]["classify"] = classify
 
@@ -237,6 +237,49 @@ def addToCart(itemID):
             return "Done"
 
     return "Error"
+
+@app.route('/removeFromCart/<string:itemID>', methods=["GET", "POST"])
+def removeFromCart(itemID):
+    if request.method == "POST":
+        user = request.get_json()
+
+        items = db.child("products").get().val()
+        users = db.child("users").get().val()
+
+        if items != None and users != None:
+            l = []
+            l2 = []
+
+            for i in items:
+                if items[i]["itemID"] == int(itemID):
+                    l = db.child("products").child(i).child("brought").get().val()
+
+                    if l == "":
+                        return "Error"
+                    
+            for j in users:
+                if items[i]["itemID"] == int(itemID):
+                    l2 = db.child("users").child(i).child("products").get().val()
+
+                    if l2 == "":
+                        return "Error"
+                    
+            for k in range(len(l)):
+                if l[k] == user["user-email"]:
+                    l.pop(k)
+
+            for k in range(len(l2)):
+                if str(l[k]) == str(itemID):
+                    l.pop(k)
+
+            db.child("products").child(i).update({"brought": l})
+            db.child("users").child(j).update({"products": l2})
+
+            return "Done"
+        
+    
+    return "Error"
+
 
 if __name__ == "__main__":
     app.run(debug=True)
