@@ -199,5 +199,44 @@ def addComments(itemID):
 
     return "Error"
 
+@app.route('/addToCart/<string:itemID>', methods=["GET", "POST"])
+def addToCart(itemID):
+    if request.method == "POST":
+        data = request.get_json()
+
+        items = db.child("products").get().val()
+        users = db.child("users").get().val()
+
+        if items != None and users != None:
+            l = []
+            l3 = []
+
+            for i in items:
+                if items[i]["itemID"] == int(itemID):
+                    l = db.child("products").child(i).child("brought").get().val()
+
+                    if l == "":
+                        l = []
+
+                    break
+
+            for j in users:
+                if users[j]["email"] == data["user-email"]:
+                    l3 = db.child("users").child(j).child("products").get().val()
+                    if l3 == "":
+                        l3 = []
+
+                    break
+
+            l.append(data["user-email"])
+            l3.append(itemID)
+
+            db.child("products").child(i).update({"brought": l})
+            db.child("users").child(j).update({"products": l3})
+
+            return "Done"
+
+    return "Error"
+
 if __name__ == "__main__":
     app.run(debug=True)
