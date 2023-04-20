@@ -2,5 +2,5 @@
 
 hugo
 
-pip install --upgrade pip
+python -m pip install -q --upgrade pip
 pip install -r requirements.txt
