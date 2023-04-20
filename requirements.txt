@@ -131,9 +131,9 @@ requests-toolbelt
 rfc3339-validator
 rfc3986-validator
 rsa
-scikit-learn==1.2.1
-scipy==1.10.1
-seaborn==0.12.2
+scikit-learn
+scipy
+seaborn
 Send2Trash
 simpervisor
 six
