@@ -5,6 +5,7 @@ Commands to be executed after cloning:
 1. python app.py
 
 Front End Code Link: https://github.com/Dineshkumaar07/Tech-Gig-frontend
+
 Commands to be executed after cloning:
 1. npm install
 2. npm start
