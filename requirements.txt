@@ -53,7 +53,6 @@ ipywidgets
 isoduration
 itsdangerous
 jax
-jax-ml
 jedi
 Jinja2
 joblib

@@ -94,8 +94,13 @@ def getItems():
 
     if items == None:
         return "No Items"
+    
+    l = []
 
-    return items
+    for i in items:
+        l.append(items[i])
+
+    return l
 
 @app.route('/getItem/<string:itemID>', methods=["GET"])
 def getItem(itemID):
@@ -140,8 +145,27 @@ def addItem():
 
         print(data)
 
+        admins = db.child("admins").get().val()
+        print('Admin', admins)
+
         itemID = db.child("itemCount").get().val()
         data["itemID"] = itemID+1
+
+        l = []
+
+        for i in admins:
+            print(admins[i])
+            print(admins[i]["username"], admins[i]["products"])
+            if admins[i]["username"] == data["adminUsername"]:
+                if (admins[i]["products"] == ""):
+                    l = []
+                else:
+                    l = admins[i]["products"]
+                break
+
+        l.append(itemID+1)
+
+        db.child("admins").child(i).update({"products": l})
 
         db.update({"itemCount": itemID+1})
 
@@ -150,6 +174,27 @@ def addItem():
         return "Done"
     
     return "Error"
+
+@app.route('/deleteItems', methods=["GET", "POST"])
+def deleteItem():
+    if request.method == "POST":
+        data = request.get_json()
+
+        print(data)
+
+        items = db.child("products").get().val()
+
+        for i in items:
+            if items[i]["itemID"] == data["itemID"]:
+                if items[i]["adminUsername"] == data["username"]:
+                    db.child("products").child(i).remove()
+                    db.update({"itemCount": db.child("itemCount").get().val()-1})
+                    return "Done"
+        
+        return "Not Found"
+    
+    return "Error"
+
 
 @app.route('/addComments/<string:itemID>', methods=["GET", "POST"])
 def addComments(itemID):
@@ -280,6 +325,95 @@ def removeFromCart(itemID):
     
     return "Error"
 
+@app.route('/addAdmin', methods=["POST"])
+def addAdmin():
+    if request.method == "POST":
+        data = request.get_json()
+
+        # print(data)
+
+        users = db.child("admins").get().val()
+        # print(users)
+
+        if users != None:
+            for i in users:
+                if users[i]["username"] == data["username"]:
+                    return "Already username exsists"
+                elif users[i]["email"] == data["email"]:
+                    return "Already Email exsists"
+
+        db.child("admins").push(data)
+
+        return "Done"
+    
+    return "Error"
+
+@app.route('/admin/login/<string:username>', methods=["GET", "POST"])
+def getAdmin(username):
+    if request.method == "POST":
+        password = request.get_json()["password"]
+        users = db.child("admins").get().val()
+
+        print(users)
+
+        if users == None:
+            return "No Data"
+        
+        for i in users:
+            # print(users[i])
+            if users[i]["username"] == username:
+                if users[i]["password"] == password:
+                    return "Correct password"
+                else:
+                    return "Wrong password"
+
+    return "Not Found"
+
+@app.route('/admin/<string:username>/getItems', methods=["GET"])
+def adminGetItems(username):
+    admins = db.child("admins").get().val()
+    
+    l = []
+    for i in admins:
+        if admins[i]["username"] == username:
+            if admins[i]["products"] != "":
+                l = admins[i]["products"]
+    
+    items = db.child("products").get().val()
+
+    output = []
+
+    if l != []:
+        for i in items:
+            for j in l:
+                if items[i]["itemID"] == j:
+                    classify = []
+
+                    for j in items[i]["comments"]:
+                        user_review = j
+
+                        user_review = tokenizer.texts_to_sequences([user_review])
+                        user_review = pad_sequences(user_review, maxlen=100, padding='post', truncating='post')
+
+                        # Predict sentiment for user review
+                        sentiment = loaded_model.predict(user_review)
+
+                        # Print the predicted sentiment
+                        # print(sentiment)
+                        if sentiment > 0.6:
+                            classify.append(1)
+                        elif sentiment < 0.6 and sentiment >= 0.1:
+                            classify.append(0)
+                        else:
+                            classify.append(-1)
+
+                    items[i]["classify"] = classify
+                    output.append(items[i])
+        return output
+    else:
+        return "Empty Product Menu"
+
+    return "Error"
 
 if __name__ == "__main__":
     app.run(debug=True)

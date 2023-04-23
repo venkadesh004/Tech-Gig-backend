@@ -13,7 +13,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"email\": \"venkadeshdeveloper@gmail.com\",\n    \"username\": \"venkadesh\",\n    \"password\": \"venkadesh\",\n    \"comments\": \"\",\n    \"products\": \"\"\n}",
+					"raw": "{\n    \"email\": \"quasim@gmail.com\",\n    \"username\": \"quda1234\",\n    \"password\": \"quda1234\",\n    \"comments\": \"\",\n    \"products\": \"\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -44,7 +44,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"itemID\": 1,\n    \"price\": \"500\",\n    \"productName\": \"Mouse\",\n    \"features\": [\n        \"RGB Lights\",\n        \"Smooth Scrolling\"\n    ],\n    \"comments\": \"\",\n    \"comment-users\": \"\",\n    \"imageURL\": \"https://www.meckeys.com/wp-content/uploads/2021/08/Keychron-K2-hot-swappable-wireless-mechanical-keyboard-for-Mac-Windows-iOS-Gateron-switch-blue-with-type-C-RGB-white-backlight-min.jpg\",\n    \"brought\": \"\"\n}",
+					"raw": "{\n    \"itemID\": 1,\n    \"price\": \"13989\",\n    \"productName\": \"vivo Y21\",\n    \"features\": [\n        \"4 GB RAM\",\n        \"64 GB ROM\",\n        \"13MP + 2MP Back | 8MP Front cameras\",\n        \"Mediatek Helio P35 Processor\",\n        \"5000mAh Lithium ion Battery\"\n    ],\n    \"comments\": \"\",\n    \"comment-users\": \"\",\n    \"imageURL\": \"https://rukminim1.flixcart.com/image/416/416/ksj9dow0/mobile/g/i/o/y21-v2111-vivo-original-imag627uhcnzx7mn.jpeg?q=70\",\n    \"brought\": \"\",\n    \"adminUsername\": \"dinesh\" \n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -127,7 +127,7 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://127.0.0.1:5000/getItem/2",
+					"raw": "http://127.0.0.1:5000/getItem/4",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -138,7 +138,7 @@
 					"port": "5000",
 					"path": [
 						"getItem",
-						"2"
+						"4"
 					]
 				}
 			},
@@ -151,7 +151,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"comments\": \"Nice Product\",\n    \"user-email\": \"venkadeshdeveloper@gmail.com\"\n}",
+					"raw": "{\n    \"comments\": \"I am using the same phone and also I have gifted it to my girlfiend it was a awesome and budget friendly Phone.\",\n    \"user-email\": \"prasanna@gmail.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -159,7 +159,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/addComments/2",
+					"raw": "http://127.0.0.1:5000/addComments/4",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -170,7 +170,7 @@
 					"port": "5000",
 					"path": [
 						"addComments",
-						"2"
+						"4"
 					]
 				}
 			},
@@ -183,7 +183,7 @@
 				"header": [],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n    \"user-email\": \"venkadeshdeveloper@gmail.com\"\n}",
+					"raw": "{\n    \"user-email\": \"quasim@gmail.com\"\n}",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -191,7 +191,7 @@
 					}
 				},
 				"url": {
-					"raw": "http://127.0.0.1:5000/addToCart/1",
+					"raw": "http://127.0.0.1:5000/addToCart/2",
 					"protocol": "http",
 					"host": [
 						"127",
@@ -202,7 +202,7 @@
 					"port": "5000",
 					"path": [
 						"addToCart",
-						"1"
+						"2"
 					]
 				}
 			},
@@ -235,6 +235,125 @@
 					"path": [
 						"removeFromCart",
 						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Admin",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"dineshkumar@gmail.com\",\n    \"username\": \"dinesh\",\n    \"password\": \"dinesh\",\n    \"products\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/addAdmin",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"addAdmin"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Check admin login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"password\": \"venkadesh\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/admin/login/venkadesh",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"admin",
+						"login",
+						"venkadesh"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get admin items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:5000/admin/dinesh/getItems",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"admin",
+						"dinesh",
+						"getItems"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Items",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"venkadesh\",\n    \"itemID\": 1\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:5000/deleteItems",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "5000",
+					"path": [
+						"deleteItems"
 					]
 				}
 			},
